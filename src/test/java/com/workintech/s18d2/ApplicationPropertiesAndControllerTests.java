@@ -83,7 +83,7 @@ class ApplicationPropertiesAndControllerTests {
     @Test
     void testGetFruits() throws Exception {
         given(fruitService.getByPriceAsc()).willReturn(List.of(sampleFruit));
-        mockMvc.perform(get("/fruit"))
+        mockMvc.perform(get("/workintech/fruits"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is("Apple")));
@@ -92,7 +92,7 @@ class ApplicationPropertiesAndControllerTests {
     @Test
     void testGetFruitsDesc() throws Exception {
         given(fruitService.getByPriceDesc()).willReturn(List.of(sampleFruit));
-        mockMvc.perform(get("/fruit/desc"))
+        mockMvc.perform(get("/workintech/fruits/desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is("Apple")));
@@ -101,7 +101,7 @@ class ApplicationPropertiesAndControllerTests {
     @Test
     void testGetFruitsByName() throws Exception {
         given(fruitService.searchByName("Apple")).willReturn(List.of(sampleFruit));
-        mockMvc.perform(get("/fruit/name/{name}", "Apple"))
+        mockMvc.perform(get("/workintech/fruits/name/{name}", "Apple"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is("Apple")));
@@ -110,17 +110,17 @@ class ApplicationPropertiesAndControllerTests {
     @Test
     void testSaveFruit() throws Exception {
         given(fruitService.save(any())).willReturn(sampleFruit);
-        mockMvc.perform(post("/fruit")
+        mockMvc.perform(post("/workintech/fruits")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(sampleFruit)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is("Apple")));
     }
 
     @Test
     void testGetByIdSuccess() throws Exception {
         given(fruitService.getById(1L)).willReturn(sampleFruit);
-        mockMvc.perform(get("/fruit/{id}", 1L))
+        mockMvc.perform(get("/workintech/fruits/{id}", 1L))
                 .andExpect(status().isOk());
     }
 
@@ -129,7 +129,7 @@ class ApplicationPropertiesAndControllerTests {
     @Test
     void testDeleteFruitSuccess() throws Exception {
         when(fruitService.delete(anyLong())).thenReturn(sampleFruit);
-        mockMvc.perform(delete("/fruit/{id}", 1L))
+        mockMvc.perform(delete("/workintech/fruits/{id}", 1L))
                 .andExpect(status().isOk());
     }
 }
