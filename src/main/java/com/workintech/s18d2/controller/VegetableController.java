@@ -16,7 +16,7 @@ public class VegetableController {
     @Autowired
     private VegetableService vegetableService;
 
-    @GetMapping
+    @GetMapping("/asc")
     public ResponseEntity<List<Vegetable>> getAllVegetablesSortedByPriceAsc() {
         List<Vegetable> vegetables = vegetableService.getByPriceAsc();
         return ResponseEntity.ok(vegetables);
